@@ -7,6 +7,7 @@ import android.util.Log;
 import android.util.LruCache;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ImageLoader {
@@ -41,6 +42,8 @@ public class ImageLoader {
         if (downloadedBitmap != null) {
             // 메모리 캐시에 저장
             memoryCache.put(imageUrl, downloadedBitmap);
+        } else {
+            Log.e(TAG, "이미지 다운로드 실패: " + imageUrl);
         }
 
         return downloadedBitmap;
@@ -49,9 +52,23 @@ public class ImageLoader {
     private Bitmap downloadImageFromNetwork(String imageUrl) {
         try {
             URL url = new URL(imageUrl);
-            return BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(10000);
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+            Log.d(TAG, "Response Code for " + imageUrl + ": " + responseCode);
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                return BitmapFactory.decodeStream(connection.getInputStream());
+            } else {
+                Log.e(TAG, "HTTP error code: " + responseCode);
+                return null;
+            }
         } catch (IOException e) {
-            Log.e(TAG, "이미지 다운로드 실패: " + imageUrl, e);
+            Log.e(TAG, "이미지 다운로드 중 예외 발생: " + imageUrl, e);
+            e.printStackTrace();
             return null;
         }
     }

@@ -20,10 +20,11 @@ public class MainActivity extends AppCompatActivity {
 
     // 테스트용 이미지 URL 목록
     private List<String> imageUrls = Arrays.asList(
-//            "https://example.com/image1.jpg",
-//            "https://example.com/image2.jpg",
-            // 실제 웹사이트 이미지 URL 추가
-            "https://www.sooplive.co.kr/directory/category"  // URL
+            // 테스트용 이미지
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/640px-PNG_transparency_demonstration_1.png",
+            "https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/7/7d/Drosophila_melanogaster_%28fruit_fly%29.jpg"
+//            "https://www.sooplive.co.kr/directory/category"  // URL
     );
 
     @Override
