@@ -46,7 +46,7 @@ dependencies {
 
     // Glide 이미지 로딩 라이브러리
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // 디스크 캐시
     implementation("com.jakewharton:disklrucache:2.0.2")
@@ -54,4 +54,7 @@ dependencies {
     // Retrofit 네트워크 통신
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // 웹 크롤링
+    implementation("org.jsoup:jsoup:1.15.3")
 }

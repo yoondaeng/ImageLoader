@@ -1,33 +1,35 @@
 package com.example.myapplication.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+
 import com.example.myapplication.R;
-import com.example.myapplication.utils.ImageLoader;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private Context context;
     private List<String> imageUrls;
-    private ImageLoader imageLoader;
-    private ExecutorService executorService;
 
-    public ImageAdapter(Context context, List<String> imageUrls, ImageLoader imageLoader) {
+    public ImageAdapter(Context context, List<String> imageUrls) {
         this.context = context;
         this.imageUrls = imageUrls;
-        this.imageLoader = imageLoader;
-        this.executorService = Executors.newFixedThreadPool(4);
     }
 
     @NonNull
@@ -40,15 +42,30 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         String imageUrl = imageUrls.get(position);
+        Log.d("ImageAdapter", "Loading image at position " + position + ": " + imageUrl);
 
-        executorService.execute(() -> {
-            Bitmap bitmap = imageLoader.loadImage(imageUrl);
-            holder.imageView.post(() -> {
-                if (bitmap != null) {
-                    holder.imageView.setImageBitmap(bitmap);
-                }
-            });
-        });
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_dialog_alert)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model,
+                                                Target<Drawable> target, boolean isFirstResource) {
+                        Log.e("ImageAdapter", "Failed to load image: " + imageUrl, e);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model,
+                                                   Target<Drawable> target, DataSource dataSource,
+                                                   boolean isFirstResource) {
+                        Log.d("ImageAdapter", "Successfully loaded image: " + imageUrl);
+                        return false;
+                    }
+                })
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.imageView);
     }
 
     @Override
