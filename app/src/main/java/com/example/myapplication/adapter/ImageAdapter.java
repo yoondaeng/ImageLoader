@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
@@ -49,8 +50,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 .load(imageUrl)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_dialog_alert)
-                .timeout(20000)
-                .listener(new RequestListener<Drawable>() {
+                .diskCacheStrategy(DiskCacheStrategy.ALL) // 원본 이미지와 변환된 이미지 모두 디스크에 캐시
+                .skipMemoryCache(false) // 메모리 캐시 활성화
+                .override(300, 400) // 이미지 크기 최적화 300X400
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .listener(new RequestListener<Drawable>() { // 이미지 로딩 상태와 캐시 사용 여부 모니터링
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
                                                 Target<Drawable> target, boolean isFirstResource) {
@@ -62,11 +67,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     public boolean onResourceReady(Drawable resource, Object model,
                                                    Target<Drawable> target, DataSource dataSource,
                                                    boolean isFirstResource) {
-                        Log.d(TAG, "Successfully loaded image: " + imageUrl);
+                        Log.d(TAG, "Successfully loaded image: " + imageUrl +
+                                " from " + dataSource.name()); // 캐시 상태 로깅
                         return false;
                     }
                 })
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.imageView);
     }
 
