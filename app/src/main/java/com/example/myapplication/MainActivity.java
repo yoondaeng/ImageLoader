@@ -39,12 +39,23 @@ public class MainActivity extends AppCompatActivity {
                         .header("Accept", "application/json")
                         .get();
 
-                // API 응답 내용 확인
                 String responseText = doc.text();
                 Log.d(TAG, "API Response: " + responseText);
 
                 JSONObject response = new JSONObject(responseText);
-                Log.d(TAG, "JSON keys: " + response.keys());
+                JSONObject data = response.getJSONObject("data");
+                JSONArray list = data.getJSONArray("list");
+
+                imageUrls.clear();
+
+                for (int i = 0; i < list.length(); i++) {
+                    JSONObject item = list.getJSONObject(i);
+                    String imageUrl = item.getString("cate_img");
+                    if (!imageUrl.isEmpty()) {
+                        Log.d(TAG, "Adding image URL: " + imageUrl);
+                        imageUrls.add(imageUrl);
+                    }
+                }
 
                 runOnUiThread(() -> {
                     imageAdapter.notifyDataSetChanged();
@@ -55,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Error loading images: " + e.getMessage());
                 e.printStackTrace();
 
-                // 에러 시 테스트 이미지 로드
                 runOnUiThread(() -> {
                     imageUrls.clear();
                     imageUrls.add("https://picsum.photos/300/400");
@@ -74,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
         // 가로/세로 모드 지원을 위한 GridLayoutManager 설정
         int orientation = getResources().getConfiguration().orientation;
-        int spanCount = (orientation == Configuration.ORIENTATION_LANDSCAPE) ? 4 : 2;
+        // 가로 모드 4열 출력, 세로 모드 3열 출력
+        int spanCount = (orientation == Configuration.ORIENTATION_LANDSCAPE) ? 4 : 3;
 
         imageGridView = findViewById(R.id.imageGridView);
         imageGridView.setLayoutManager(new GridLayoutManager(this, spanCount));
