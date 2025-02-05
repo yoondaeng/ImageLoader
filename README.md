@@ -64,9 +64,6 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
 
 <img src="https://raw.githubusercontent.com/yoondaeng/ImageLoader/7f2df69d0dafe663d2d913cec947f58cad76cc63/Screenshot_20250206_052047.png" width="600" height="auto">
 
-### 🔻 세로 -> 가로 전환
-<video src="https://github.com/yoondaeng/ImageLoader/raw/b77ae9bd2667e81b99409d160f07c5e7f41031fa/video.webm" controls width="600">
-</video>
 
 - 외부 API에서 이미지 URL 리스트 로드
 - 가로/세로 모드 레이아웃 지원 (가로 4열, 세로 3열)
