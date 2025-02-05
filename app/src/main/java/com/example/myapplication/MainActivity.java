@@ -56,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 String responseText = doc.text();
                 Log.d(TAG, "API Response: " + responseText);
 
+                // JSON 문자열을 JSONObject로 변환 (역직렬화)
                 JSONObject response = new JSONObject(responseText);
                 JSONObject data = response.getJSONObject("data");
                 JSONArray list = data.getJSONArray("list");
 
                 imageUrls.clear();
 
+                // JSON 배열에서 각 아이템의 이미지 URL 추출
                 for (int i = 0; i < list.length(); i++) {
                     JSONObject item = list.getJSONObject(i);
                     String imageUrl = item.getString("cate_img");
