@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.adapter.ImageAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,34 +24,45 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter imageAdapter;
     private List<String> imageUrls = new ArrayList<>();
 
-    private void loadImagesFromWebpage() {
+    private void loadImages() {
         new Thread(() -> {
             try {
-                Document doc = Jsoup.connect("https://www.sooplive.co.kr/directory/category")
-                        .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-                        .timeout(15000)
+                Document doc = Jsoup.connect("https://sch.sooplive.co.kr/api.php")
+                        .data("m", "categoryList")
+                        .data("szKeyword", "")
+                        .data("szOrder", "view_cnt")
+                        .data("nPageNo", "1")
+                        .data("nListCnt", "120")
+                        .data("nOffset", "0")
+                        .data("szPlatform", "pc")
+                        .ignoreContentType(true)
+                        .header("Accept", "application/json")
                         .get();
 
-                // div.thumb 내부의 img 태그를 선택
-                Elements images = doc.select("div.thumb img");
-                Log.d(TAG, "Found " + images.size() + " images");
+                // API 응답 내용 확인
+                String responseText = doc.text();
+                Log.d(TAG, "API Response: " + responseText);
 
-                imageUrls.clear();
-                images.forEach(element -> {
-                    String imageUrl = element.attr("src");
-                    if (!imageUrl.isEmpty() && imageUrl.contains("admin.img.sooplive.co.kr")) {
-                        imageUrls.add(imageUrl);
-                        Log.d(TAG, "Added image URL: " + imageUrl);
-                    }
-                });
+                JSONObject response = new JSONObject(responseText);
+                Log.d(TAG, "JSON keys: " + response.keys());
 
                 runOnUiThread(() -> {
                     imageAdapter.notifyDataSetChanged();
                     Log.d(TAG, "Updated adapter with " + imageUrls.size() + " images");
                 });
-            } catch (IOException e) {
-                Log.e(TAG, "Error loading webpage: " + e.getMessage());
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error loading images: " + e.getMessage());
                 e.printStackTrace();
+
+                // 에러 시 테스트 이미지 로드
+                runOnUiThread(() -> {
+                    imageUrls.clear();
+                    imageUrls.add("https://picsum.photos/300/400");
+                    imageUrls.add("https://picsum.photos/300/401");
+                    imageUrls.add("https://picsum.photos/300/402");
+                    imageAdapter.notifyDataSetChanged();
+                });
             }
         }).start();
     }
@@ -71,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         imageAdapter = new ImageAdapter(this, imageUrls);
         imageGridView.setAdapter(imageAdapter);
 
-        // 웹페이지에서 이미지 URL 로드
-        loadImagesFromWebpage();
+        // 이미지 로드 시작
+        loadImages();
     }
 }

@@ -1,12 +1,13 @@
+// ImageAdapter.java
 package com.example.myapplication.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,7 +54,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
                                                 Target<Drawable> target, boolean isFirstResource) {
-                        Log.e(TAG, "Image load failed for URL: " + imageUrl, e);
+                        Log.e(TAG, "Failed to load image: " + imageUrl, e);
                         return false;
                     }
 
@@ -61,7 +62,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     public boolean onResourceReady(Drawable resource, Object model,
                                                    Target<Drawable> target, DataSource dataSource,
                                                    boolean isFirstResource) {
-                        Log.d(TAG, "Image loaded successfully: " + imageUrl);
+                        Log.d(TAG, "Successfully loaded image: " + imageUrl);
                         return false;
                     }
                 })
