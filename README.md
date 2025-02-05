@@ -9,20 +9,20 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
 2. Gradle Sync
 3. 에뮬레이터 또는 안드로이드 기기에서 앱 실행
 
-## 사용한 기술 스택
-- Java
-- Android SDK
-- Jsoup (HTML 파싱)
+## 기술 스택
+- `Java`
+- `Android SDK`
+- `Jsoup`
   - 웹 크롤링 및 API 응답 파싱에 최적화된 라이브러리
-- Glide (이미지 로딩 및 캐싱)
+- `Glide`
   - 빠른 이미지 로딩 속도
   - 메모리 및 디스크 캐싱 메커니즘
   - GIF, WebP 등 다양한 이미지 포맷 지원
   - 이미지 변환 및 후처리 기능 제공
   - 코드 간결성 좋음
-- RecyclerView
+- `RecyclerView`
   - 뷰 재사용을 통한 메모리 효율성
-- GridLayoutManager
+- `GridLayoutManager`
   - 화면 방향에 따른 동적 열 개수 조정
 
 ## 구현 기능 목록
