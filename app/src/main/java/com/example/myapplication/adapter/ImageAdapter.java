@@ -26,6 +26,8 @@ import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private static final String TAG = "ImageAdapter";
+    private static final int IMAGE_WIDTH = 300;
+    private static final int IMAGE_HEIGHT = 400;
     private Context context;
     private List<String> imageUrls;
 
@@ -52,8 +54,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 .error(android.R.drawable.ic_dialog_alert)
                 .diskCacheStrategy(DiskCacheStrategy.ALL) // 원본 이미지와 변환된 이미지 모두 디스크에 캐시
                 .skipMemoryCache(false) // 메모리 캐시 활성화
-                .override(300, 400) // 이미지 크기 최적화 300X400
+                .override(IMAGE_WIDTH, IMAGE_HEIGHT) // 이미지 크기 최적화 300X400
                 .centerCrop()
+
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .listener(new RequestListener<Drawable>() { // 이미지 로딩 상태와 캐시 사용 여부 모니터링
                     @Override

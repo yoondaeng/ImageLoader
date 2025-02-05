@@ -13,6 +13,19 @@ import java.net.URL;
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
 
+    // 메모리 캐시 관련 상수
+    private static final int MEMORY_CACHE_DIVISION_FACTOR = 8;
+
+    // 네트워크 연결 타임아웃 상수 (ms)
+    private static final int CONNECT_TIMEOUT_MS = 5000;
+    private static final int READ_TIMEOUT_MS = 10000;
+
+    // HTTP 상태 코드
+    private static final int HTTP_OK = HttpURLConnection.HTTP_OK;
+
+    // 바이트-킬로바이트 변환 상수
+    private static final int BYTES_TO_KILOBYTES = 1024;
+
     private LruCache<String, Bitmap> memoryCache;
     private Context context;
 
@@ -20,13 +33,13 @@ public class ImageLoader {
         this.context = context;
 
         // 메모리 캐시 초기화
-        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        int cacheSize = maxMemory / 8;
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / BYTES_TO_KILOBYTES);
+        int cacheSize = maxMemory / MEMORY_CACHE_DIVISION_FACTOR;
 
         memoryCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
             protected int sizeOf(String key, Bitmap bitmap) {
-                return bitmap.getByteCount() / 1024;
+                return bitmap.getByteCount() / BYTES_TO_KILOBYTES;
             }
         };
     }
@@ -53,14 +66,14 @@ public class ImageLoader {
         try {
             URL url = new URL(imageUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(CONNECT_TIMEOUT_MS);
+            connection.setReadTimeout(READ_TIMEOUT_MS);
             connection.setRequestMethod("GET");
 
             int responseCode = connection.getResponseCode();
             Log.d(TAG, "Response Code for " + imageUrl + ": " + responseCode);
 
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HTTP_OK) {
                 return BitmapFactory.decodeStream(connection.getInputStream());
             } else {
                 Log.e(TAG, "HTTP error code: " + responseCode);
