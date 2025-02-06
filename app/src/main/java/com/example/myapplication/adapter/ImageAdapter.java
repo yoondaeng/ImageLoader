@@ -14,10 +14,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.myapplication.R;
+import com.example.myapplication.utils.CacheMetrics;
 import com.example.myapplication.utils.Constants;
 import java.util.List;
 
@@ -25,10 +25,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     private static final String TAG = "ImageAdapter";
     private final Context context;
     private List<String> imageUrls;
+    private final CacheMetrics metrics;
 
     public ImageAdapter(Context context, List<String> imageUrls) {
         this.context = context;
         this.imageUrls = imageUrls;
+        this.metrics = new CacheMetrics();
     }
 
     public void updateImages(List<String> newImages) {
@@ -48,15 +50,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         String imageUrl = imageUrls.get(position);
         Log.d(TAG, "Loading image at position " + position + ": " + imageUrl);
 
+        long startTime = System.nanoTime();
+
         Glide.with(context)
                 .load(imageUrl)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_dialog_alert)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .skipMemoryCache(false)
                 .override(Constants.IMAGE_WIDTH, Constants.IMAGE_HEIGHT)
                 .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
@@ -69,8 +71,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     public boolean onResourceReady(Drawable resource, Object model,
                                                    Target<Drawable> target, DataSource dataSource,
                                                    boolean isFirstResource) {
-                        Log.d(TAG, "Successfully loaded image: " + imageUrl +
-                                " from " + dataSource.name());
+                        long loadTime = (System.nanoTime() - startTime) / 1_000_000; // 밀리초로 변환
+                        metrics.logRequest(dataSource, loadTime);
+
+                        if (position % 10 == 0) {
+                            Log.d(TAG, metrics.getStatistics());
+                        }
+
                         return false;
                     }
                 })
@@ -80,6 +87,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public int getItemCount() {
         return imageUrls.size();
+    }
+
+    public CacheMetrics getMetrics() {
+        return metrics;
     }
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
