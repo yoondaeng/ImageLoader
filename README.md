@@ -56,13 +56,17 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
       
 
 ## 구현 기능 목록
+
+### 🔻 SOOP LOGO
+<img src="screenshot/Screenshot_20250206_155715.png" width="300" height="auto">
+
 ### 🔻 세로 모드 (이미지 3열 출력)
 
-<img src="https://raw.githubusercontent.com/yoondaeng/ImageLoader/7f2df69d0dafe663d2d913cec947f58cad76cc63/Screenshot_20250206_052017.png" width="300" height="auto">
+<img src="screenshot/Screenshot_20250206_155239.png" width="300" height="auto">
 
 ### 🔻 가로 모드 (이미지 4열 출력)
 
-<img src="https://raw.githubusercontent.com/yoondaeng/ImageLoader/7f2df69d0dafe663d2d913cec947f58cad76cc63/Screenshot_20250206_052047.png" width="600" height="auto">
+<img src="screenshot/Screenshot_20250206_155303.png" width="600" height="auto">
 
 
 - 외부 API에서 이미지 URL 리스트 로드
