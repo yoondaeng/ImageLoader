@@ -38,10 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter imageAdapter;
     private List<String> imageUrls = new ArrayList<>();
 
-    // ActionBar에 로고 설정
-    getSupportActionBar().setLogo(R.drawable.soop_logo);
-    getSupportActionBar().setDisplayUseLogoEnabled(true);
-
     private void loadImages() {
         new Thread(() -> {
             try {
@@ -101,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ActionBar에 로고 설정
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setLogo(R.drawable.soop_logo);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+        }
 
         // 가로/세로 모드 지원을 위한 GridLayoutManager 설정
         int orientation = getResources().getConfiguration().orientation;
