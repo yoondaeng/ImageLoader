@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter imageAdapter;
     private List<String> imageUrls = new ArrayList<>();
 
+    // ActionBar에 로고 설정
+    getSupportActionBar().setLogo(R.drawable.soop_logo);
+    getSupportActionBar().setDisplayUseLogoEnabled(true);
+
     private void loadImages() {
         new Thread(() -> {
             try {
