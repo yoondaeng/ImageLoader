@@ -10,12 +10,6 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
 2. Gradle Sync
 3. 에뮬레이터 또는 안드로이드 기기에서 앱 실행
 
-## 개발 환경
-- `Android Studio`
-- `Kotlin 1.9.0`
-- `Gradle 8.0`
-- 최소 SDK 버전: `Android 24 (API 24)`
-- 대상 SDK 버전: `Android 35 (API 35)`
 
 ## 프로젝트 폴더 구조
 ```plaintext
