@@ -207,12 +207,12 @@ graph TD
 #### 이미지 로딩 패턴
 - 이미지들이 19번 위치부터 12번 위치까지 순차적으로 로딩
 - 로딩 시간 간격이 매우 짧음 (2-3ms)
-- URL 패턴: admin.img.sooplive.co.kr/category_img/ 도메인에서 로딩
+- `admin.img.sooplive.co.kr/category_img/` 도메인에서 로딩
 
 
 #### 렌더링 성능 측면
 
-- EGL_emulation 로그에서 확인 가능
+- `EGL_emulation` 로그에서 확인 가능
     - 평균 렌더링 시간: 4.52ms
     - 최소: 1.61ms
     - 최대: 9.19ms
