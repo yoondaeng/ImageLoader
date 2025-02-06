@@ -71,6 +71,16 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
 ### 📹 세로 모드에서 가로 모드 전환
 <img src="screenshot/Screen_recording_video.gif" width="300" height="auto">
 
+<video 
+  src="screenshot/Screen_recording_20250206_155503.webm" 
+  width="640" 
+  height="360" 
+  autoplay 
+  loop 
+  muted 
+  playsinline
+  style="max-width: 100%; display: block; margin: 0 auto;">
+</video>
 
 - 외부 API에서 이미지 URL 리스트 로드
 - 가로/세로 모드 레이아웃 지원 (가로 4열, 세로 3열)
