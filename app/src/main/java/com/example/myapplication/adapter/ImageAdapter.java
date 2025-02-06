@@ -1,4 +1,3 @@
-// ImageAdapter.java
 package com.example.myapplication.adapter;
 
 import android.content.Context;
@@ -8,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,19 +18,22 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.myapplication.R;
-
+import com.example.myapplication.utils.Constants;
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private static final String TAG = "ImageAdapter";
-    private static final int IMAGE_WIDTH = 300;
-    private static final int IMAGE_HEIGHT = 400;
-    private Context context;
+    private final Context context;
     private List<String> imageUrls;
 
     public ImageAdapter(Context context, List<String> imageUrls) {
         this.context = context;
         this.imageUrls = imageUrls;
+    }
+
+    public void updateImages(List<String> newImages) {
+        this.imageUrls = newImages;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -52,13 +52,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                 .load(imageUrl)
                 .placeholder(android.R.drawable.ic_menu_gallery)
                 .error(android.R.drawable.ic_dialog_alert)
-                .diskCacheStrategy(DiskCacheStrategy.ALL) // 원본 이미지와 변환된 이미지 모두 디스크에 캐시
-                .skipMemoryCache(false) // 메모리 캐시 활성화
-                .override(IMAGE_WIDTH, IMAGE_HEIGHT) // 이미지 크기 최적화 300X400
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(false)
+                .override(Constants.IMAGE_WIDTH, Constants.IMAGE_HEIGHT)
                 .centerCrop()
-
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .listener(new RequestListener<Drawable>() { // 이미지 로딩 상태와 캐시 사용 여부 모니터링
+                .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model,
                                                 Target<Drawable> target, boolean isFirstResource) {
@@ -71,7 +70,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                                                    Target<Drawable> target, DataSource dataSource,
                                                    boolean isFirstResource) {
                         Log.d(TAG, "Successfully loaded image: " + imageUrl +
-                                " from " + dataSource.name()); // 캐시 상태 로깅
+                                " from " + dataSource.name());
                         return false;
                     }
                 })
@@ -86,7 +85,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     static class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
 
-        public ImageViewHolder(@NonNull View itemView) {
+        ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
         }
