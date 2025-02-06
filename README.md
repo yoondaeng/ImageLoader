@@ -57,6 +57,8 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
 
 ## 구현 기능 목록
 
+<img src="screenshot/Screen_recording_video.gif" width="600" height="auto">
+
 ### 🔻 SOOP LOGO
 <img src="screenshot/Screenshot_20250206_155715.png" width="300" height="auto">
 
