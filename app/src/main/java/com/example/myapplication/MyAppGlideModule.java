@@ -13,7 +13,7 @@ import com.bumptech.glide.module.AppGlideModule;
 
 @GlideModule
 public class MyAppGlideModule extends AppGlideModule {
-    private static final int MEMORY_CACHE_SCREEN_COUNT = 2; // 캐시 화면 수
+    private static final int MEMORY_CACHE_SCREEN_COUNT = 3; // 캐시 화면 수
     private static final long DISK_CACHE_SIZE_MB = 250; // 디스크 캐시 크기 (MB)
     private static final long MEGABYTE_TO_BYTE = 1024 * 1024; // MB -> B 변환
 
