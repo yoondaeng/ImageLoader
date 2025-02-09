@@ -64,7 +64,7 @@ app/
     - `MyAppGlideModule.java`: Glide 설정
 
 - 구성요소별 패키지
-    - `adapter/`: RecyclerView 어댑터
+    - `adapter/`: View 재사용으로 메모리 효율화
     - `model/`: 데이터 모델 클래스
     - `repository/`: 데이터 처리 로직
     - `viewmodel/`: UI 상태 관리
