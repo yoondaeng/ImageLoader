@@ -16,66 +16,46 @@ Glide 라이브러리를 사용하여 이미지 로딩 및 캐싱 성능을 최�
 ## 프로젝트 폴더 구조
 ```plaintext
 app/
-├── build.gradle
-└── src/
-    └── main/
-        ├── java/
-        │   └── com/
-        │       └── example/
-        │           └── myapplication/
-        │               ├── MainActivity.java
-        │               ├── MyAppGlideModule.java
-        │               ├── adapter/
-        │               │   └── ImageAdapter.java
-        │               ├── model/
-        │               │   └── ImageItem.java
-        │               ├── repository/
-        │               │   └── ImageRepository.java
-        │               ├── utils/
-        │               │   ├── CacheMetrics.java      # 캐시 성능 측정
-        │               │   ├── Constants.java         # 상수 정의
-        │               │   └── MemoryMonitor.java     # 메모리 모니터링
-        │               └── viewmodel/
-        │                   └── MainViewModel.java
-        │
-        ├── res/
-        │   ├── drawable/
-        │   │   ├── ic_aqua.xml
-        │   │   ├── ic_bell.xml
-        │   │   ├── ic_menu.xml
-        │   │   ├── ic_search.xml
-        │   │   ├── ic_settings.xml
-        │   │   └── soop_logo.xml
-        │   ├── layout/
-        │   │   ├── activity_main.xml
-        │   │   ├── header_layout.xml
-        │   │   └── item_image.xml
-        │   └── values/
-        │       ├── colors.xml
-        │       ├── strings.xml
-        │       └── themes.xml
-        │
-        └── AndroidManifest.xml
+└── src/main/java/com/example/myapplication/
+    ├── view/                          # View 계층
+    │   ├── MainActivity.java         
+    │   └── adapter/                  
+    │       └── ImageAdapter.java     
+    │
+    ├── viewmodel/                     # ViewModel 계층
+    │   └── MainViewModel.java        
+    │
+    ├── model/                         # Model 계층
+    │   ├── data/                     
+    │   │   └── ImageItem.java       
+    │   └── repository/              
+    │       └── ImageRepository.java  
+    │
+    ├── config/                        # 설정
+    │   └── MyAppGlideModule.java    
+    │
+    └── utils/                         # 유틸리티
+        ├── CacheMetrics.java        
+        ├── Constants.java           
+        └── MemoryMonitor.java
 ```
 ### MVVM 구조 사용
 
-- 코어 클래스
-    - `MainActivity.java`: 메인 화면 활동
-    - `MyAppGlideModule.java`: Glide 설정
+- `view/`: UI 관련 컴포넌트
 
-- 구성요소별 패키지
-    - `adapter/`: View 재사용으로 메모리 효율화
-    - `model/`: 데이터 모델 클래스
-    - `repository/`: 데이터 처리 로직
-    - `viewmodel/`: UI 상태 관리
-    - `utils/`: 유틸리티 클래스
-
-- 리소스 파일
-    - `drawable/`: 아이콘 및 이미지
-    - `layout/`: 레이아웃 XML 파일
-    - `values/`: 리소스 값들
   
-- 성능 테스트 관련
+- `viewmodel/`: UI 로직과 상태 관리
+
+  
+- `model/`: 데이터 모델과 비즈니스 로직
+
+  
+- `config/`: 앱 설정
+
+
+- `utils/`: 공통 유틸리티
+
+  
     - `CacheMetrics.java`: 캐시 성능 측정
     - `MemoryMonitor.java`: 메모리 사용량 모니터링
     - `Constants.java`: 상수 정의
