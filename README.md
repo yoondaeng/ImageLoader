@@ -260,9 +260,12 @@ MEMORY_CACHE_SCREEN_COUNT = 3;  // 적당한 성능과 메모리 사용
 MEMORY_CACHE_SCREEN_COUNT = 4;  // 성능 최적화
 ```
 썸네일 이미지는 300*400 크기의 일반적인 이미지 리스트라 볼 수 있으므로 `3개` 화면 분량의 이미지를 메모리에 캐시하도록 설정
-
+```java
+private static final int MEMORY_CACHE_SCREEN_COUNT = 3
+```
 
 ### 스크롤 시 부드러운 사용자 경험 제공 가능 (ver.2025.02.09)
+
 
 ## 향후 추가 테스트 계획
 - 스크롤 후 되돌아올 때의 메모리 캐시 히트율
