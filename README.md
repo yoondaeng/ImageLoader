@@ -235,6 +235,34 @@ graph TD
 - 최대 가용 메모리: 192.00MB
 - 메모리 사용률: 4.2%
 
+## 캐싱 사이즈
+### 메모리/디스크 캐시
+
+```java
+private static final int MEMORY_CACHE_SCREEN_COUNT = 2
+private static final long DISK_CACHE_SIZE_MB = 250; // 250MB
+```
+
+- 2개 화면 분량의 이미지를 메모리에 캐시
+
+
+- 실제 크기는 디바이스의 화면 크기와 메모리에 따라 MemorySizeCalculator가 계산
+
+### 개선사항
+1. 빠른 스크롤시 캐시 미스 발생
+2. 메모리 캐시 히트율 저하
+
+```java
+// 일반적인 이미지 리스트
+MEMORY_CACHE_SCREEN_COUNT = 3;  // 적당한 성능과 메모리 사용
+
+// 빠른 스크롤이 필요한 경우
+MEMORY_CACHE_SCREEN_COUNT = 4;  // 성능 최적화
+```
+썸네일 이미지는 300*400 크기의 일반적인 이미지 리스트라 볼 수 있으므로 `3개` 화면 분량의 이미지를 메모리에 캐시하도록 설정
+
+
+### 스크롤 시 부드러운 사용자 경험 제공 가능 (ver.2025.02.09)
 
 ## 향후 추가 테스트 계획
 - 스크롤 후 되돌아올 때의 메모리 캐시 히트율
