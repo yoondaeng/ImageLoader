@@ -1,4 +1,4 @@
-package com.example.myapplication.model;
+package com.example.myapplication.model.data;
 
 public class ImageItem {
     private String imageUrl;

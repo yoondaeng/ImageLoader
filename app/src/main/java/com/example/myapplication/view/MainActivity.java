@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.view;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.myapplication.adapter.ImageAdapter;
-import com.example.myapplication.model.ImageItem;
+
+import com.example.myapplication.R;
+import com.example.myapplication.view.adapter.ImageAdapter;
+import com.example.myapplication.model.data.ImageItem;
 import com.example.myapplication.utils.Constants;
 import com.example.myapplication.utils.MemoryMonitor;
 import com.example.myapplication.viewmodel.MainViewModel;

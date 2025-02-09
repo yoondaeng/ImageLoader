@@ -1,11 +1,11 @@
-package com.example.myapplication.repository;
+package com.example.myapplication.model.repository;
 
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import com.example.myapplication.model.ImageItem;
+import com.example.myapplication.model.data.ImageItem;
 import com.example.myapplication.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;

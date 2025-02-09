@@ -3,8 +3,8 @@ package com.example.myapplication.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import com.example.myapplication.model.ImageItem;
-import com.example.myapplication.repository.ImageRepository;
+import com.example.myapplication.model.data.ImageItem;
+import com.example.myapplication.model.repository.ImageRepository;
 import com.example.myapplication.utils.Constants;
 import java.util.List;
 
